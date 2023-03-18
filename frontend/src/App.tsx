@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import "./App.css";
-import { subToWorkspace, unsubFromWorkspace } from "./client";
+import { submitPatch, subToWorkspace, unsubFromWorkspace } from "./client";
 
 function App() {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -17,12 +17,28 @@ function App() {
     };
   }, [workspaceId]);
 
-  const params = new URLSearchParams("workspaceId=my-workspace");
-
+  const workspaces = ["my-workspace-1", "my-workspace-2", "my-workspace-3"];
   return (
     <div className="App">
-      {workspaceId}
-      <button onClick={() => setSearchParams(params)}>click me</button>
+      <div>
+        {workspaceId}
+        {workspaceId && (
+          <button
+            onClick={() => submitPatch(workspaceId, "123", { abc: "qwe" })}
+          >
+            Patch
+          </button>
+        )}
+      </div>
+      {workspaces.map((wId) => (
+        <button
+          onClick={() =>
+            setSearchParams(new URLSearchParams(`workspaceId=${wId}`))
+          }
+        >
+          {wId}
+        </button>
+      ))}
     </div>
   );
 }

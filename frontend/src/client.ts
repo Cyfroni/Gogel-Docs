@@ -19,7 +19,11 @@ export const unsubFromWorkspace = (workspaceId: string) => {
   });
 };
 
-const submitPatch = (workspaceId: string, documentId: string, patches: any) => {
+export const submitPatch = (
+  workspaceId: string,
+  documentId: string,
+  patches: any
+) => {
   const patchId = uuidv4();
   socket.emit(
     "patch",
@@ -35,10 +39,10 @@ const submitPatch = (workspaceId: string, documentId: string, patches: any) => {
 };
 
 socket.on("connect", () => {
-  const workspaceId = "my-workspace";
-  const docId = "doc1";
-  subToWorkspace(workspaceId);
-  submitPatch(workspaceId, docId, ["your-json-patches here"]);
+  // const workspaceId = "my-workspace";
+  // const docId = "doc1";
+  // subToWorkspace(workspaceId);
+  // submitPatch(workspaceId, docId, ["your-json-patches here"]);
 });
 
 socket.on(

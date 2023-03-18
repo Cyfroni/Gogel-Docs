@@ -6,7 +6,7 @@ const publishedPatchMap: LRUMap<string, boolean> = new LRUMap<string, boolean>(1
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
