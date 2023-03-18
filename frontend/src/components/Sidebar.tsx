@@ -13,8 +13,6 @@ const Sidebar = observer(({ setSelectedDocument }) => {
   const { workspace } = useMst();
   const newDocumentRef = useRef();
 
-  console.log(newDocumentRef);
-
   return (
     <Menu>
       <MenuDivider title="Documents" />

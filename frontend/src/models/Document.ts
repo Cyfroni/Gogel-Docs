@@ -20,12 +20,13 @@ export const Document = types
       const elemToRemove = self.data.find((e) => e.id === id);
       self.data.remove(elemToRemove);
     },
-    swapRows(id1: string, id2: string) {
-      const elem1 = self.data.findIndex((e) => e.id === id1);
-      const elem2 = self.data.findIndex((e) => e.id === id2);
-      const tmp = self.data[elem1];
-      self.data[elem1] = self.data[elem2];
-      self.data[elem2] = tmp;
+    swapRows(ind1: number, ind2: number) {
+      // const elem1 = self.data.findIndex((e) => e.id === id1);
+      // const elem2 = self.data.findIndex((e) => e.id === id2);
+      const elem1 = { ...self.data[ind1] };
+      const elem2 = { ...self.data[ind2] };
+      self.data[ind1] = elem2;
+      self.data[ind2] = elem1;
     },
   }))
   .views((self) => ({

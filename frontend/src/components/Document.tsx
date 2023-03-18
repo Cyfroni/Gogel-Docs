@@ -1,21 +1,29 @@
-import { Button, ButtonGroup, InputGroup } from "@blueprintjs/core";
+import { Button, InputGroup } from "@blueprintjs/core";
+import { observer } from "mobx-react-lite";
+import { useRef } from "react";
 import DocumentRow from "./DocumentRow";
 
-const Document = (document) => {
+const DocumentNode = observer(({ doc }) => {
+  const newRowKeyRef = useRef();
+  const newRowValueRef = useRef();
+
   return (
     <div>
-      {document.data?.map((row) => {
-        <DocumentRow row={row} />;
-      })}
+      {doc.rows?.map((row, ind) => (
+        <DocumentRow row={row} ind={ind} document={doc} />
+      ))}
       <div style={{ display: "flex" }}>
-        <InputGroup />
-        <InputGroup />
-        <ButtonGroup>
-          <Button icon="add" />
-        </ButtonGroup>
+        <InputGroup inputRef={newRowKeyRef} />
+        <InputGroup inputRef={newRowValueRef} />
+        <Button
+          icon="add"
+          onClick={() =>
+            doc.addRow(newRowKeyRef.current.value, newRowValueRef.current.value)
+          }
+        />
       </div>
     </div>
   );
-};
+});
 
-export default Document;
+export default DocumentNode;
