@@ -1,14 +1,14 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { subToWorkspace, unsubFromWorkspace } from "./client";
-import { useMst } from "../models/Root";
 import { observer } from "mobx-react-lite";
-import { Button, ButtonGroup, InputGroup } from "@blueprintjs/core";
-
-const workspaces = ["my-workspace-1", "my-workspace-2", "my-workspace-3"];
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useMst } from "../models/Root";
+import { subToWorkspace, unsubFromWorkspace } from "./client";
+import Document from "./Document";
+import Sidebar from "./Sidebar";
 
 const App = observer(() => {
   const router = useRouter();
+  const [selectedDocument, setSelectedDocument] = useState("");
 
   const { workspace } = useMst();
 
@@ -23,40 +23,12 @@ const App = observer(() => {
     };
   }, [workspaceId]);
 
+  const document = workspace.getDocuments.find((d) => d.id == selectedDocument);
+
   return (
     <div className="App">
-      {workspaces.map((wId) => (
-        <button key={wId} onClick={() => router.push(`?workspaceId=${wId}`)}>
-          {wId}
-        </button>
-      ))}
-      <div>
-        {workspaceId}
-        {workspaceId && (
-          <button onClick={() => workspace.addDocument("123")}>Patch</button>
-        )}
-      </div>
-      <div>
-        {workspace.getDocuments.map((d) => (
-          <span>{d}</span>
-        ))}
-      </div>
-      <div style={{ display: "flex" }}>
-        <InputGroup />
-        <InputGroup />
-        <ButtonGroup>
-          <Button icon="arrow-down" />
-          <Button icon="arrow-up" />
-          <Button icon="delete" />
-        </ButtonGroup>
-      </div>
-      <div style={{ display: "flex" }}>
-        <InputGroup />
-        <InputGroup />
-        <ButtonGroup>
-          <Button icon="add" />
-        </ButtonGroup>
-      </div>
+      {document && <Document document={document} />}
+      <Sidebar setSelectedDocument={setSelectedDocument} />
     </div>
   );
 });
