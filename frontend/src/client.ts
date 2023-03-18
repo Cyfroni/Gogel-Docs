@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const socket = io("http://localhost:9001");
 
-const subToWorkspace = (workspaceId: string) => {
+export const subToWorkspace = (workspaceId: string) => {
   socket.emit("sub", { workspaceId }, (success: any) => {
     if (success) {
       console.log(`Subscribed to ${workspaceId}`);
@@ -11,7 +11,7 @@ const subToWorkspace = (workspaceId: string) => {
   });
 };
 
-const unsubFromWorkspace = (workspaceId: string) => {
+export const unsubFromWorkspace = (workspaceId: string) => {
   socket.emit("unsub", { workspaceId }, (success: any) => {
     if (success) {
       console.log(`Unsubscribed from ${workspaceId}`);
