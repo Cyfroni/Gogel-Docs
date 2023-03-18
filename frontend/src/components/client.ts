@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
+import { applyIncomingPatches, rootStore } from "../models/Root";
 
 const socket = io("http://localhost:9001");
 
@@ -38,13 +39,6 @@ export const submitPatch = (
   );
 };
 
-socket.on("connect", () => {
-  // const workspaceId = "my-workspace";
-  // const docId = "doc1";
-  // subToWorkspace(workspaceId);
-  // submitPatch(workspaceId, docId, ["your-json-patches here"]);
-});
-
 socket.on(
   "patch",
   (data: {
@@ -57,6 +51,7 @@ socket.on(
       `Patch ${data.patchId} received for workspace ${data.workspaceId}`
     );
     const { documentId, patches } = data;
+    applyIncomingPatches(patches);
     console.log({ documentId, patches });
   }
 );
