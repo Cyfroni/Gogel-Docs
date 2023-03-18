@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { subToWorkspace, unsubFromWorkspace } from "./client";
 import { useMst } from "../models/Root";
 import { observer } from "mobx-react-lite";
+import { Button, ButtonGroup, InputGroup } from "@blueprintjs/core";
 
 const workspaces = ["my-workspace-1", "my-workspace-2", "my-workspace-3"];
 
@@ -22,28 +23,17 @@ const App = observer(() => {
     };
   }, [workspaceId]);
 
-  // const nodes: TreeNodeInfo[] = [
-  //   {
-  //     id: 0,
-  //     hasCaret: true,
-  //     icon: "folder-close",
-  //     label: <span>123</span>,
-  //   },
-  // ];
-
   return (
     <div className="App">
-      {/* {store.m} */}
+      {workspaces.map((wId) => (
+        <button key={wId} onClick={() => router.push(`?workspaceId=${wId}`)}>
+          {wId}
+        </button>
+      ))}
       <div>
         {workspaceId}
         {workspaceId && (
-          // <button onClick={() => {}}>Patch</button>
           <button onClick={() => workspace.addDocument("123")}>Patch</button>
-          // <button
-          //   onClick={() => submitPatch(workspaceId, "123", { abc: "qwe" })}
-          // >
-          //   Patch
-          // </button>
         )}
       </div>
       <div>
@@ -51,17 +41,22 @@ const App = observer(() => {
           <span>{d}</span>
         ))}
       </div>
-      {workspaces.map((wId) => (
-        <button
-          key={wId}
-          onClick={() =>
-            // setSearchParams(new URLSearchParams(`workspaceId=${wId}`))
-            router.push(`?workspaceId=${wId}`)
-          }
-        >
-          {wId}
-        </button>
-      ))}
+      <div style={{ display: "flex" }}>
+        <InputGroup />
+        <InputGroup />
+        <ButtonGroup>
+          <Button icon="arrow-down" />
+          <Button icon="arrow-up" />
+          <Button icon="delete" />
+        </ButtonGroup>
+      </div>
+      <div style={{ display: "flex" }}>
+        <InputGroup />
+        <InputGroup />
+        <ButtonGroup>
+          <Button icon="add" />
+        </ButtonGroup>
+      </div>
     </div>
   );
 });

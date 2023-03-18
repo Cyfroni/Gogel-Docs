@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
-import { applyIncomingPatches, rootStore } from "../models/Root";
+import { applyIncomingPatches } from "../models/Root";
 
 const socket = io("http://localhost:9001");
 
