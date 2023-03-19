@@ -23,13 +23,13 @@ const App = observer(() => {
     };
   }, [workspaceId]);
 
-  const doc = workspace.getDocuments.find((d) => d.id == selectedDocument);
+  const document = workspace.getDocuments.find((d) => d.id == selectedDocument);
   // document.data[0].
   // document.data.length
   // console.log(doc?.rows);
   return (
     <div className="App">
-      {doc && <Document doc={doc} />}
+      {document && <Document document={document} />}
       <Sidebar setSelectedDocument={setSelectedDocument} />
     </div>
   );

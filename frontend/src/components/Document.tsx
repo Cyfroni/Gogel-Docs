@@ -1,24 +1,28 @@
 import { Button, InputGroup } from "@blueprintjs/core";
 import { observer } from "mobx-react-lite";
 import { useRef } from "react";
+import { IDocument } from "../models/Document";
 import DocumentRow from "./DocumentRow";
 
-const DocumentNode = observer(({ doc }) => {
-  const newRowKeyRef = useRef();
-  const newRowValueRef = useRef();
+const DocumentNode = observer(({ document }: { document: IDocument }) => {
+  const newRowKeyRef = useRef<HTMLInputElement>();
+  const newRowValueRef = useRef<HTMLInputElement>();
 
   return (
     <div>
-      {doc.rows?.map((row, ind) => (
-        <DocumentRow row={row} ind={ind} document={doc} />
+      {document.rows?.map((row, ind) => (
+        <DocumentRow key={row.id} row={row} ind={ind} document={document} />
       ))}
-      <div style={{ display: "flex" }}>
+      <div className="flex">
         <InputGroup inputRef={newRowKeyRef} />
         <InputGroup inputRef={newRowValueRef} />
         <Button
           icon="add"
           onClick={() =>
-            doc.addRow(newRowKeyRef.current.value, newRowValueRef.current.value)
+            document.addRow(
+              newRowKeyRef.current.value,
+              newRowValueRef.current.value
+            )
           }
         />
       </div>

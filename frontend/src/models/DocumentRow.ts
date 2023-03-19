@@ -1,4 +1,4 @@
-import { types } from "mobx-state-tree";
+import { Instance, types } from "mobx-state-tree";
 
 export const DocumentRow = types
   .model({
@@ -12,3 +12,5 @@ export const DocumentRow = types
       self.value = value;
     },
   }));
+
+export interface IDocumentRow extends Instance<typeof DocumentRow> {}

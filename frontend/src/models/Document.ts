@@ -1,4 +1,4 @@
-import { types } from "mobx-state-tree";
+import { detach, Instance, types } from "mobx-state-tree";
 import { v4 as uuidv4 } from "uuid";
 import { DocumentRow } from "./DocumentRow";
 
@@ -21,12 +21,7 @@ export const Document = types
       self.data.remove(elemToRemove);
     },
     swapRows(ind1: number, ind2: number) {
-      // const elem1 = self.data.findIndex((e) => e.id === id1);
-      // const elem2 = self.data.findIndex((e) => e.id === id2);
-      const elem1 = { ...self.data[ind1] };
-      const elem2 = { ...self.data[ind2] };
-      self.data[ind1] = elem2;
-      self.data[ind2] = elem1;
+      self.data.splice(ind2, 0, detach(self.data[ind1]));
     },
   }))
   .views((self) => ({
@@ -34,3 +29,5 @@ export const Document = types
       return self.data;
     },
   }));
+
+export interface IDocument extends Instance<typeof Document> {}
