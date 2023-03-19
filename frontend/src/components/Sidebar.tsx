@@ -22,12 +22,18 @@ const Sidebar = observer(
       <Menu>
         <MenuDivider title="Documents" />
         {workspace.getDocuments.map((d) => (
-          <MenuItem
-            key={d.id}
-            icon="document"
-            onClick={() => setSelectedDocument(d.id)}
-            text={d.name}
-          />
+          <>
+            <MenuItem
+              key={d.id}
+              icon="document"
+              onClick={() => setSelectedDocument(d.id)}
+              text={d.name}
+            />
+            <Button
+              icon="delete"
+              onClick={() => workspace.removeDocument(d.id)}
+            />
+          </>
         ))}
         <div className="flex">
           <InputGroup inputRef={newDocumentRef} />

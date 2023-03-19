@@ -1,3 +1,4 @@
+import { NonIdealState } from "@blueprintjs/core";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -29,7 +30,17 @@ const App = observer(() => {
   // console.log(doc?.rows);
   return (
     <div className="App">
-      {document && <Document document={document} />}
+      {document ? (
+        <Document document={document} />
+      ) : (
+        <NonIdealState
+          title={
+            selectedDocument
+              ? "Your document has been deleted, try another one ;("
+              : "Please select a document to collaborate"
+          }
+        />
+      )}
       <Sidebar setSelectedDocument={setSelectedDocument} />
     </div>
   );
