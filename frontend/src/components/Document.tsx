@@ -4,12 +4,17 @@ import { useRef } from "react";
 import { IDocument } from "../models/Document";
 import DocumentRow from "./DocumentRow";
 
-const DocumentNode = observer(({ document }: { document: IDocument }) => {
+interface Props {
+  document: IDocument;
+}
+
+const Document = observer(({ document }: Props) => {
   const newRowKeyRef = useRef<HTMLInputElement>();
   const newRowValueRef = useRef<HTMLInputElement>();
 
   return (
     <div>
+      <span>Document: {document.name}</span>
       {document.rows?.map((row, ind) => (
         <DocumentRow key={row.id} row={row} ind={ind} document={document} />
       ))}
@@ -30,4 +35,4 @@ const DocumentNode = observer(({ document }: { document: IDocument }) => {
   );
 });
 
-export default DocumentNode;
+export default Document;

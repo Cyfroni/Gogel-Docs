@@ -9,6 +9,9 @@ export const Workspace = types
     documents: types.array(Document),
   })
   .actions((self) => ({
+    setName(name: string) {
+      self.name = name;
+    },
     addDocument(name: string) {
       self.documents.push({
         id: uuidv4(),

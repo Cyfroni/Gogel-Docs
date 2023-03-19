@@ -1,12 +1,6 @@
-import {
-  applyPatch,
-  Instance,
-  onPatch,
-  onSnapshot,
-  types,
-} from "mobx-state-tree";
+import { applyPatch, Instance, onPatch, types } from "mobx-state-tree";
 import { createContext, useContext } from "react";
-import { submitPatch } from "../components/client";
+import { submitPatch } from "../client/client";
 import { Workspace } from "./Workspace";
 
 const RootModel = types.model({
@@ -15,34 +9,19 @@ const RootModel = types.model({
 
 let initialState = RootModel.create({
   workspace: {
-    name: "123",
+    name: "",
     documents: [],
   },
 });
 
-// if (process.browser) {
-//   const data = localStorage.getItem("rootState");
-//   if (data) {
-//     const json = JSON.parse(data);
-//     if (RootModel.is(json)) {
-//       initialState = RootModel.create(json);
-//     }
-//   }
-// }
-
 export const rootStore = initialState;
-
-onSnapshot(rootStore, (snapshot) => {
-  console.log("Snapshot: ", snapshot);
-  localStorage.setItem("rootState", JSON.stringify(snapshot));
-});
 
 let inPatching = false;
 
 onPatch(rootStore, (patch) => {
   console.info("Got change: ", patch);
   if (!inPatching) {
-    submitPatch("my-workspace-1", "", patch);
+    submitPatch(rootStore.workspace.name, patch);
   }
 });
 

@@ -4,7 +4,6 @@
   "description": "",
   "scripts": {
     "start-server": "ts-node src/server.ts",
-    "start-client": "ts-node src/client.ts",
     "reformat": "yarn prettier --write ./src",
     "checkformat": "yarn prettier --check ./src"
   },

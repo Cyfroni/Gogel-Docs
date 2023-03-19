@@ -20,20 +20,14 @@ export const unsubFromWorkspace = (workspaceId: string) => {
   });
 };
 
-export const submitPatch = (
-  workspaceId: string,
-  documentId: string,
-  patches: any
-) => {
+export const submitPatch = (workspaceId: string, patches: any) => {
   const patchId = uuidv4();
   socket.emit(
     "patch",
-    { workspaceId, documentId, patchId, patches },
+    { workspaceId, documentId: "", patchId, patches },
     (success: any) => {
       if (success) {
-        console.log(
-          `Patch ${patchId} for document ${documentId} sent to ${workspaceId}`
-        );
+        console.log(`Patch ${patchId} sent to ${workspaceId}`);
       }
     }
   );
@@ -50,8 +44,6 @@ socket.on(
     console.log(
       `Patch ${data.patchId} received for workspace ${data.workspaceId}`
     );
-    const { documentId, patches } = data;
-    applyIncomingPatches(patches);
-    console.log({ documentId, patches });
+    applyIncomingPatches(data.patches);
   }
 );
